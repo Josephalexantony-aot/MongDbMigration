@@ -1,0 +1,76 @@
+
+=> fetch event ids from source db with limit 50.
+    parameters: isArchived = false
+                if no createdBy field, fetch,
+                if exist createdBy, fetch let given date,
+
+--------------------------------------------------------------------
+
+=> loop through event ids to migrate attendee, emails, eventActivity, payment and paymentAudit data from 
+    source db to destination db.
+ 
+  //using first event id//
+   
+=> initialising eventMigration to save migration collectionStatus
+   // find the total count of attendee, emails, eventActivity, payment and paymentAudit.
+    eventMigraion = new eventMigration() 
+            eventMigraion.eventId = eventId
+            eventMigraion.startTime = now.Data
+            eventMigraion.save()
+ 
+//attendee
+    SourceAttendeeCount = get total count of attendee in source db.
+   
+    eventMigraion.attendee.count = SourceAttendeeCount    
+    eventMigration.attendee.isCompleted = false;(default)   
+     // save to migration status (eventMigraion)
+
+=> fetching 'attendee' from source db with a lmit n.
+    parameters: eventId
+
+    save attendee details to destination db 
+    delete saved attendee from source db using attendee id.
+    
+    fetch and save next n sttendee details
+    Repeat until attendee collection is empty in source db.
+
+    destinationAttendeeCount = get count of attendee in destination db.
+    if destinationAttendeeCount = SourceAttendeeCount, attendee migration compleated and move to emails,
+        eventActivity, payment and paymentAudit.
+    else repeat fetching attendee details using same event id.
+
+=> Update  in source db for the eventId.
+       isArchived = true 
+=> Update eventMigraion in destinationdb
+       isCompleted = true,
+       migrationEndTime = now.date
+
+=>Repeate the job for the next event id and continue until compleating the n.
+ 
+------------------------------------------------------------------------------------------
+
+
+
+=> repeat the job until find no events with isArchived = false.
+   if no event exist with is compleated true, End Migration process.
+    
+-----------------------------------------------------------------------------------------
+
+
+
+attendee = {
+    count = attendeeCount,
+    isCompleted : false
+
+}
+
+
+
+
+
+    
+
+
+
+
+

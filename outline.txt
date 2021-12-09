@@ -1,0 +1,211 @@
+
+
+    // fetch 50 events with conditions
+
+    fetchEvents = () ={
+        events = parameters for find($exist createdby? fetch date let a particular date : fetch all).limit(50)
+        var eventIds = []
+            events.forEach(event){
+                eventId = event._Id
+            }
+        migrateData(eventIds);
+    }
+    
+
+    migrateData = (eventIds) =>{
+
+        eventIds.forEach(eventId){  
+            
+             //creating and pushing new metadata obj
+
+             eventMigraion = new eventMigration() 
+
+                eventMigraion.eventId
+                eventMigraion.startTime
+                
+
+                //// Fetching and saving details of attendee 
+                    fetchAndSaveAttendeeData = async () => {
+                        while(!empty){
+                            try {
+                                SourceAttendeeCount = Sourceattendee.count(eventId:);
+                                save Count to client db.
+                                data = await sourceAttendee.find({eventId :{$eq: eventId} }).limit(100)
+                                pushArrayOfDataToDb(data, "pushAttendeeobjects");
+                                data.forEach(item){
+                                    itemId = item.id
+                                    sourceAttendee.dekete(_id :$eq: itemId )
+                                
+                            }
+                        
+                            } catch (error) {
+                                console.log('error' + error)
+                            }
+                        }
+
+                            
+
+                        clientAttendeeCount = ClientAttendee.count(eventId:);       
+                            if(clientAttendeeCount == SourceAttendeeCount)
+                            {
+                                migrationMetadata.collectionStatus.isCompleted = true;
+                                metaData = new clientConnection.migrationMetadata()  //updating metaData with 
+                                                                                        name: attendee, // attendee,emails, etc..
+                                                                                        isCompleted: true,
+                                                                                        count: SourceAttendeeCount
+                                deleteAttendeeData();
+                                fetchAndSaveEmailData();
+                            
+                            }
+                         
+                        
+                    }
+
+
+                //// Fetching and saving details of email 
+
+                    fetchAndSaveEmailData = async () => {
+                        while(!empty){
+                            try {
+                                SourcEemailsCount = SourEeemails.count(eventId);
+                                data = await sourceEmail.find({eventId :{$eq: eventId} and isArchived : false}).limit(100)
+                                pushArrayOfDataToDb(data, "pushEmailobjects");
+                                data.forEach(item){
+                                    itemId = item.id
+                                    sourceEmail.update(isArchived = true where _id :$eq: itemId )
+                                
+                            }
+                        
+                            } catch (error) {
+                                console.log('error' + error)
+                            }
+                        }
+
+                        clientEmailCount = ClientEmail.count(eventId:);       
+                            if(clientEmailCount == SourceEmailCount)
+                            {
+                                migrationMetadata.collectionStatus.isCompleted = true;
+                                metaData = new clientConnection.migrationMetadata()  //updating metaData with 
+                                                                                        name: email, // attendee,emails, etc..
+                                                                                        isCompleted: true,
+                                                                                        count:SourcEemailsCount
+                                fetchAndSavePaymentAudit();
+                            }
+                    }
+
+
+                //// Fetching and saving details of paymentAudit 
+
+                    fetchAndSavePaymentAudit = async () => {
+                        while(!empty){
+                            try {
+                                SourcepaymentAuditCount = SourcePaymentAudit.count(eventId);
+                                data = await sourceAttendee.find({eventId :{$eq: eventId} and isArchived : false}).limit(100)
+                                pushArrayOfDataToDb(data, "pushPaymentObjects");
+                                data.forEach(item){
+                                    itemId = item.id
+                                    sourcePaymentAudit.update(isArchived = true where _id :$eq: itemId )
+                                
+                            }
+                        
+                            } catch (error) {
+                                console.log('error' + error)
+                            }
+                        }
+
+                        clientPaymentAuditCount = ClientEmail.count(eventId:);       
+                            if(clientPaymentAuditCount == SourcePaymentAuditCount)
+                            {
+                                migrationMetadata.collectionStatus.isCompleted = true;
+                                metaData = new clientConnection.migrationMetadata()  //updating metaData with 
+                                                                                        name: paymentAudit, // 
+                                                                                        isCompleted: true,
+                                                                                        count: SourcepaymentAuditCount
+                                fetchAndSavePayment();
+                            }
+                    }
+
+                //// Fetching and saving details of payment 
+
+                    fetchAndSavePayment = async () => {
+                        while(!empty){
+                            try {
+        
+                                SourcePaymentCount = SourcePayment.count(eventId);
+                                data = await sourcePayment.find({eventId :{$eq: eventId} and isArchived : false}).limit(100)
+                                pushArrayOfDataToDb(data, "pushPaymentObjects");
+                                data.forEach(item){
+                                    itemId = item.id
+                                    sourcePayment.update(isArchived = true where _id :$eq: itemId )
+                                
+                            }
+                        
+                            } catch (error) {
+                                console.log('error' + error)
+                            }
+                        }
+
+                        clientPaymentAuditCount = ClientEmail.count(eventId:);       
+                            if(clientPaymentAuditCount == SourcePaymentAuditCount)
+                            {
+                                migrationMetadata.collectionStatus.isCompleted = true;
+                                metaData = new clientConnection.migrationMetadata()  //updating metaData with 
+                                                                                        name: paymentAudit, // 
+                                                                                        isCompleted: true,
+                                                                                        count: SourcePaymentCount
+                                fetchAndSaveEventActivity();
+                            }
+                    }     
+
+                 
+
+                    //// Fetching and saving details of eventActivity 
+
+                    fetchAndSaveEventActivity = async () => {
+                        while(!empty){
+                            try {
+                                SourcEeventActivityStreemCount = SourceEventActivityStreem.count(eventId);
+                                data = await sourceEventActivity.find({eventId :{$eq: eventId} and isArchived : false}).limit(100)
+                                pushArrayOfDataToDb(data, "pusheventActivityObjects");
+                                data.forEach(item){
+                                    itemId = item.id
+                                    sourceEventActivity.update(isArchived = true where _id :$eq: itemId )
+                                
+                            }
+                        
+                            } catch (error) {
+                                console.log('error' + error)
+                            }
+                        }
+
+                        clienteventActivityCount = ClientEmail.count(eventId:);       
+                            if(clienteventActivityCount == SourceeventActivityCount)
+                            {
+                                migrationMetadata.collectionStatus.isCompleted = true;
+                                metaData = new clientConnection.migrationMetadata()  //updating metaData with 
+                                                                                        name: paymentAudit, // 
+                                                                                        isCompleted: true,
+                                                                                        count: SourcEeventActivityStreemCount
+
+                                                                                        
+                                
+                            }
+                    }  
+
+            if(clienteventActivityCount == SourceeventActivityCount &&
+            clientPaymentAuditCount == SourcePaymentAuditCount && 
+            clientActivityStreemCount == SourceActivityStreemCount && 
+            clientPaymentAuditCount == SourcePaymentAuditCount && clientEmailCount == SourceEmailCount && 
+            clientAttendeeCount == SourceAttendeeCount )   
+
+                    //  metaData = new clientConnection.migrationMetadata()  //updating metaData with isCompleted = True 
+
+            sourceEvent.update(isArchived = true where _id :$eq: eventId )
+                               isCompletedJob = True;
+
+        }
+
+    }
+
+
+
